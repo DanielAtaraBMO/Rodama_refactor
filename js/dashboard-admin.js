@@ -1,9 +1,6 @@
-function obtenerUsuarioActivo() {
-  try {
-    return JSON.parse(localStorage.getItem("usuarioActivo"));
-  } catch {
-    return null;
-  }
+
+function getProducts() {
+  return JSON.parse(localStorage.getItem("products")) || [];
 }
 
 const usuarioActivo = obtenerUsuarioActivo();
@@ -101,12 +98,16 @@ const imageFiles = document.getElementById("imageFiles");
 const previewContainer = document.getElementById("previewContainer");
 const sizesWrapper = document.getElementById("sizesWrapper");
 const sizesMessage = document.getElementById("sizesMessage");
-const modalTitle = document.getElementById("modalTitle");
-const saveProductBtn = document.getElementById("saveProductBtn");
-const newProductButton = document.getElementById("newProductButton");
-
-let productoEditandoId = null;
-let imagenesTemporales = [];
+const imageFilesInput = document.getElementById("imageFiles");
+const imageUrlsInput = document.getElementById("imageUrls");
+const previewContainer = document.getElementById("previewContainer");
+const menuItems = document.querySelectorAll('.menu li');
+const sections = document.querySelectorAll('.section');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebarOverlay');
+const hamburger = document.getElementById('hamburger');
+renderProducts(products);
+toggleSizesByCategory();
 
 function obtenerStockPorTalla() {
   const stockPorTalla = {};
@@ -122,6 +123,7 @@ function obtenerStockPorTalla() {
     }
   });
 
+
   return stockPorTalla;
 }
 
@@ -130,7 +132,9 @@ function actualizarStockGeneral() {
     stock.readOnly = false;
     stock.disabled = false;
     stock.value = normalizarCantidad(stock.value);
-    return;
+    images = await getImagesFromFiles(imageFilesInput.files);
+  } else {
+    images = ["https://via.placeholder.com/400x500?text=Producto"];
   }
 
   const stockPorTalla = obtenerStockPorTalla();
@@ -139,7 +143,6 @@ function actualizarStockGeneral() {
     (suma, cantidad) => suma + normalizarCantidad(cantidad),
     0
   );
-
   stock.value = total;
   stock.readOnly = true;
   stock.disabled = false;
@@ -155,16 +158,9 @@ function cambiarTallasPorCategoria() {
     input.disabled = esAccesorio;
   });
 
-  if (esAccesorio) {
-    stock.readOnly = false;
-    stock.disabled = false;
-    stock.value = normalizarCantidad(stock.value);
-    return;
-  }
-
-  actualizarStockGeneral();
+function renderProducts(productList) {
+  table.innerHTML = "";
 }
-
 function obtenerTextoStock(producto) {
   if (producto.category === "Accesorios") {
     return `General: ${producto.stock}`;
@@ -172,20 +168,8 @@ function obtenerTextoStock(producto) {
 
   const stockPorTalla = producto.stockBySize || {};
 
-  const texto = Object.entries(stockPorTalla)
-    .filter(([, cantidad]) => normalizarCantidad(cantidad) > 0)
-    .map(([talla, cantidad]) => `${talla}: ${cantidad}`)
-    .join(" · ");
-
-  return texto || "Sin stock por talla";
-}
-
-function mostrarProductos(listaProductos = obtenerProductos()) {
-  productTable.innerHTML = "";
-
   if (listaProductos.length === 0) {
     productTable.innerHTML = `
-      <tr>
         <td colspan="7" class="text-center py-4">
           No hay productos registrados.
         </td>
@@ -194,7 +178,7 @@ function mostrarProductos(listaProductos = obtenerProductos()) {
 
     return;
   }
-
+}
   listaProductos.forEach((productoOriginal) => {
     const producto = normalizarProducto(productoOriginal);
 
@@ -245,18 +229,35 @@ function mostrarProductos(listaProductos = obtenerProductos()) {
         </button>
       </td>
     `;
-
-    fila.querySelector(".product-name-text").textContent =
-      producto.name || "Producto sin nombre";
-
-    fila.querySelector(".product-description-preview").textContent =
-      producto.description || "Sin descripción";
+            })}
+function handleSearch() {
+  const value = searchInput.value.toLowerCase().trim();
 
     fila.querySelector(".product-category-badge").textContent =
       producto.category || "Sin categoría";
 
-    fila.querySelector(".btn-edit").addEventListener("click", () => {
-      editarProducto(producto);
+  renderProducts(filtered);
+}
+
+function deleteProduct(id) {
+  products = products.filter(product => product.id !== id);
+  saveProducts();
+  handleSearch();
+}
+
+function saveProducts() {
+  localStorage.setItem("products", JSON.stringify(products));
+}
+
+function toggleSizesByCategory() {
+  const isAccessory = categorySelect.value === "Accesorios";
+
+  sizesWrapper.classList.toggle("d-none", isAccessory);
+  sizesMessage.classList.toggle("d-none", !isAccessory);
+
+  if (isAccessory) {
+    document.querySelectorAll(".size-check").forEach(check => {
+      check.checked = false;
     });
 
     fila
@@ -264,8 +265,28 @@ function mostrarProductos(listaProductos = obtenerProductos()) {
       .addEventListener("click", () => {
         eliminarProducto(producto.id, producto.name);
       });
+    }}
+function compressImage(file, maxWidth = 500, quality = 0.7) {
+  return new Promise(resolve => {
+    const img = new Image();
+    const reader = new FileReader();
 
-    productTable.appendChild(fila);
+    reader.onload = e => img.src = e.target.result;
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const scale = maxWidth / img.width;
+
+      canvas.width = maxWidth;
+      canvas.height = img.height * scale;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      resolve(canvas.toDataURL("image/jpeg", quality));
+    };
+
+    reader.readAsDataURL(file);
   });
 }
 
@@ -416,9 +437,23 @@ function eliminarProducto(id, nombreProducto) {
   const confirmar = confirm(
     `¿Deseas eliminar el producto "${nombreProducto}"?`
   );
+}
+hamburger.addEventListener('click', () => {
+  sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+});
 
-  if (!confirmar) {
-    return;
+overlay.addEventListener('click', closeSidebar);
+
+function logout() {
+  localStorage.removeItem("adminSession");
+  window.location.href = "login-admin.html";
+}
+
+function checkSession() {
+  const session = JSON.parse(localStorage.getItem("adminSession"));
+
+  if (!session) {
+    window.location.href = "login-admin.html";
   }
 
   const productos = obtenerProductos().filter((producto) => {
