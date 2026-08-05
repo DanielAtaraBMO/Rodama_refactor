@@ -602,18 +602,119 @@ h2 {
 }
 
 .cart-count {
-      position: absolute;
-      top: -8px;
-      right: -10px;
-      min-width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #f5ebeb;
-      color: #0e0d0d;
-      font-size: 12px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2px;
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f5ebeb;
+  color: #0e0d0d;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+}
+.footer{
+  background:#580f0f;
+  border-top:1px solid #b7a99c;
+  padding:60px 80px 20px;
+}
+
+.footer-container{
+  max-width:1200px;
+  margin:auto;
+
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:60px;
+}
+
+.footer-logo{
+  width:90px;
+  margin-bottom:18px;
+}
+
+.footer-text{
+  color:#fff;
+  font-size:14px;
+  margin-bottom:30px;
+}
+
+.subscribe-form{
+  display:flex;
+  gap:12px;
+}
+
+.subscribe-form input{
+  width:230px;
+  height:42px;
+  border:none;
+  padding:0 15px;
+  font-size:14px;
+}
+
+.subscribe-form button{
+  height:42px;
+  border:none;
+  padding:0 22px;
+  background:#d8bca6;
+  color:#fff;
+  cursor:pointer;
+  letter-spacing:1px;
+  transition:.3s;
+}
+
+.subscribe-form button:hover{
+  background:#c39d7f;
+}
+
+.footer-contact,
+.footer-links{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.footer-contact p,
+.footer-links a{
+  text-decoration:none;
+  color:#fff;
+  font-size:13px;
+  letter-spacing:.5px;
+}
+
+.footer-links a:hover{
+  color:#b88963;
+}
+
+.footer-bottom{
+  max-width:1200px;
+  margin:50px auto 0;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.footer-bottom span{
+  font-size:12px;
+  color:#fff;
+}
+
+.social-icons{
+  display:flex;
+  gap:18px;
+}
+
+.social-icons a{
+  color:#fff;
+  font-size:15px;
+  transition:.3s;
+}
+
+.social-icons a:hover{
+  color:#b88963;
 }
