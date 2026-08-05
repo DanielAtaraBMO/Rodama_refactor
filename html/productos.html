@@ -16,16 +16,9 @@
   <link rel="stylesheet" href="../css/productos.css" />
 </head>
 
-        <div class="nav-icons">
-          <input
-            type="text"
-            id="searchInput"
-            class="search-input"
-            placeholder="Buscar productos..."
-          />
-
   <nav class="custom-navbar">
     <div class="nav-container">
+
       <img src="../img/RODAMA_LOGO.png" alt="RODAMA" class="logo-img" />
 
       <ul class="nav-links">
@@ -36,13 +29,14 @@
       </ul>
 
       <div class="nav-icons">
+
         <input type="text" id="searchInput" class="search-input" placeholder="Buscar productos..." />
 
-        <a href="#" id="searchToggle" title="Buscar">
+        <a href="#" id="searchToggle">
           <i class="bi bi-search"></i>
         </a>
 
-        <a href="./login-admin.html" id="adminAccess">
+        <a href="#" id="adminAccess" class="adminAccess">
           <i class="bi bi-person-fill"></i>
         </a>
 
@@ -51,12 +45,14 @@
           <span id="cartCount" class="cart-count">0</span>
         </a>
 
-        <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <button class="hamburger" id="hamburger">
           <span></span>
           <span></span>
           <span></span>
         </button>
+
       </div>
+
     </div>
 
     <div class="mobile-menu" id="mobileMenu">
@@ -67,6 +63,7 @@
         <li><a href="../html/contacto.html">Contacto</a></li>
       </ul>
     </div>
+
   </nav>
 
   <main class="py-5">
@@ -104,37 +101,72 @@
         </div>
 
         <div class="row g-4" id="productContainer"></div>
-      </section>
+      </div>
+    </section>
     </div>
-  </main>
+    <footer class="footer">
+      <div class="footer-container">
 
-  <footer class="border-top py-4">
-    <div class="container text-center">
-      <div class="mb-3">
-        <a href="https://www.facebook.com/" class="social-link mx-2 fs-5">
-          <i class="bi bi-facebook"></i>
-        </a>
+        <div class="footer-brand">
+          <img src="/img/RODAMA_LOGO.png" alt="Fleur" class="footer-logo">
 
-        <a href="https://www.instagram.com/" class="social-link mx-2 fs-5">
-          <i class="bi bi-instagram"></i>
-        </a>
+          <p class="footer-text">
+            Si puedes soñarlo, puedes hacerlo
+          </p>
 
-        <a href="https://x.com/" class="social-link mx-2 fs-5">
-          <i class="bi bi-twitter-x"></i>
-        </a>
+          <form class="subscribe-form">
+            <input
+              type="email"
+              placeholder="Email Address"
+            />
 
-        <a href="https://www.linkedin.com/" class="social-link mx-2 fs-5">
-          <i class="bi bi-linkedin"></i>
+            <button type="submit">
+              SUBSCRIBIR
+            </button>
+          </form>
+        </div>
+
+        <div class="footer-contact">
+          <p>+57 323 2233251</p>
+          <p>rodama@gmail.com</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="./html/contacto.html">CONTACTANOS</a>
+          <a href="./html/productos.html">HACER UN PEDIDO</a>
+          <a href="#">ENVÍO</a>
+          <a href="#">DEVOLUCIONES</a>
+          <a href="#">FAQ</a>
+          <a href="#">VER GUIA</a>
+        </div>
+
+        <div class="footer-links">
+          <a href="./html/acerca-de-nosotros.html">ACERCA DE NOSOTROS</a>
+          <a href="#">TRABAJA CON NOSOTROS</a>
+          <a href="#">POLITICA DE PRIVACIDAD</a>
+          <a href="#">TERMINOS Y CONDICIONES</a>
+          <a href="#">CONSULTAS DE PRENSA</a>
+        </div>
+
+      </div>
+      <div class="back-to-top">
+        <a href="#top">
+          <i class="bi bi-arrow-up"></i>
+          Volver arriba
         </a>
       </div>
+      <div class="footer-bottom">
+        <span>© Rodama 2026</span>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.x.com/"><i class="bi bi-twitter-x"></i></a>
+          <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+        </div>
+      </div>
 
-      <small class="text-muted">© 2026 RODAMA. Todos los derechos reservados.</small>
-    </div>
-  </footer>
-
+    </footer>
   <script src="../js/productos.js"></script>
   <script src="../js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

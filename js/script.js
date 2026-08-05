@@ -93,7 +93,6 @@ function crearMenuUsuario() {
     contenedor.innerHTML = `
       <a class="user-trigger" href="${obtenerRuta("login.html")}">
         <i class="bi bi-person"></i>
-        <span>Ingresar</span>
       </a>
     `;
 
