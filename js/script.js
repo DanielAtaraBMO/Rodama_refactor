@@ -241,3 +241,65 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.updateCartCount = actualizarContadorCarrito;
+
+/* utilidades añadidas al final */
+(function () {
+  function mostrarMensaje(elemento, texto, tipo) {
+    if (!elemento) return;
+    elemento.innerHTML = `<span class="msg ${tipo}">${texto}</span>`;
+  }
+
+  function initNewsletter() {
+    const form = document.getElementById("newsletterForm");
+    const emailInput = document.getElementById("newsletterEmail");
+    const messageWrap = document.getElementById("newsletterMessage");
+
+    if (!form || !emailInput || !messageWrap) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = String(emailInput.value || "").trim();
+
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!re.test(email)) {
+        mostrarMensaje(messageWrap, "Por favor ingresa un correo válido.", "error");
+        emailInput.focus();
+        return;
+      }
+
+      try {
+        const suscritos = JSON.parse(localStorage.getItem("rodama_newsletter") || "[]");
+        if (!suscritos.includes(email)) {
+          suscritos.push(email);
+          localStorage.setItem("rodama_newsletter", JSON.stringify(suscritos));
+        }
+        mostrarMensaje(messageWrap, "Gracias por suscribirte. Revisa tu correo para confirmar.", "success");
+        form.reset();
+      } catch (err) {
+        mostrarMensaje(messageWrap, "Error al procesar la suscripción. Intenta nuevamente.", "error");
+      }
+    });
+  }
+
+  function initWhatsAppFloat() {
+    const wa = document.getElementById("whatsappButton");
+    if (!wa) return;
+
+    try {
+      const tooltip = bootstrap.Tooltip.getOrCreateInstance(wa);
+    } catch (err) {}
+
+    wa.style.transform = "translateY(8px)";
+    wa.style.opacity = "0";
+    setTimeout(() => {
+      wa.style.transition = "transform 0.35s ease, opacity 0.35s ease";
+      wa.style.transform = "translateY(0)";
+      wa.style.opacity = "1";
+    }, 300);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initNewsletter();
+    initWhatsAppFloat();
+  });
+})();
