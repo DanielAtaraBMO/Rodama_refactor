@@ -3,13 +3,17 @@
   flex: 0 0 auto;
 }
 
+.custom-navbar{
+  background-color: #fff;
+}
+
 .nav-icons .user-trigger {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 28px;
   padding: 5px;
-  color: #fff;
+  color: #0a0a0a;
   font-family: "Playfair Display", serif;
   font-size: 30px;
   cursor: pointer;

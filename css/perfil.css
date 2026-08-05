@@ -30,11 +30,6 @@ body {
   transition: all 0.3s ease;
 }
 
-.custom-navbar.scrolled {
-  background: #111;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
 .nav-container {
   display: flex;
   align-items: center;
