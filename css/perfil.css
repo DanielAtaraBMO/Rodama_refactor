@@ -57,12 +57,13 @@ body {
 .nav-links a {
   position: relative;
   padding-bottom: 4px;
-  color: #fff;
+  color: #000000;
   font-size: 0.8rem;
   letter-spacing: 1px;
   text-decoration: none;
   text-transform: uppercase;
   transition: color 0.2s;
+  font-size: 16px;
 }
 
 .nav-links a::after {
@@ -91,8 +92,8 @@ body {
 }
 
 .nav-icons > a {
-  color: #fff;
-  font-size: 18px;
+  color: #000;
+  font-size: 25px;
   text-decoration: none;
   transition: color 0.2s;
 }
